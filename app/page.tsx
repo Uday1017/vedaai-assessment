@@ -2,14 +2,13 @@
 
 import { useRef, useState } from "react";
 import dynamic from "next/dynamic";
+type Screen = "upload" | "extracting" | "results";
 
 type ExtractedQuestion = {
   id: string;
   number: string;
   text: string;
-  maxMarks: number;
   marks?: string;
-  score?: number;
   status?: "answered" | "unanswered";
   page?: number;
   feedback?: string;
@@ -95,9 +94,71 @@ function BellIcon() {
       strokeWidth="1.8"
       strokeLinecap="round"
       strokeLinejoin="round"
+      className="bell-svg"
     >
       <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
       <path d="M10 21h4" />
+    </svg>
+  );
+}
+function SparkleIcon() {
+  return (
+    <svg
+      width="22"
+      height="22"
+      viewBox="0 0 24 24"
+      fill="none"
+      className="sparkle-svg"
+    >
+      <path
+        d="M12 2.5C12.8 7.5 16.5 11.2 21.5 12C16.5 12.8 12.8 16.5 12 21.5C11.2 16.5 7.5 12.8 2.5 12C7.5 11.2 11.2 7.5 12 2.5Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+function SmallSparkleIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2.5C12.8 7.5 16.5 11.2 21.5 12C16.5 12.8 12.8 16.5 12 21.5C11.2 16.5 7.5 12.8 2.5 12C7.5 11.2 11.2 7.5 12 2.5Z" />
+    </svg>
+  );
+}
+
+function ProfileIcon() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="8" r="3.5" />
+      <path d="M5.5 20c.8-3.5 3-5.5 6.5-5.5s5.7 2 6.5 5.5" />
+    </svg>
+  );
+}
+
+function ChevronDownIcon() {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="m6 9 6 6 6-6" />
     </svg>
   );
 }
@@ -139,111 +200,78 @@ function MenuIcon() {
   );
 }
 
+/* Sidebar nav icons: solid/filled style to match the product design */
+
 function GridIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <rect
-        x="4"
-        y="4"
-        width="6"
-        height="6"
-        rx="1"
-        stroke="currentColor"
-        strokeWidth="1.8"
-      />
-      <rect
-        x="14"
-        y="4"
-        width="6"
-        height="6"
-        rx="1"
-        stroke="currentColor"
-        strokeWidth="1.8"
-      />
-      <rect
-        x="4"
-        y="14"
-        width="6"
-        height="6"
-        rx="1"
-        stroke="currentColor"
-        strokeWidth="1.8"
-      />
-      <rect
-        x="14"
-        y="14"
-        width="6"
-        height="6"
-        rx="1"
-        stroke="currentColor"
-        strokeWidth="1.8"
-      />
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+      <rect x="4" y="4" width="7" height="7" rx="1.6" />
+      <rect x="13" y="4" width="7" height="7" rx="1.6" />
+      <rect x="4" y="13" width="7" height="7" rx="1.6" />
+      <rect x="13" y="13" width="7" height="7" rx="1.6" />
     </svg>
   );
 }
 
 function BookIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+      <rect x="3" y="5.5" width="18" height="12" rx="2.5" />
+      <circle cx="19.2" cy="4.3" r="2.3" />
       <path
-        d="M5 5.5A2.5 2.5 0 0 1 7.5 3H19v16H7.5A2.5 2.5 0 0 0 5 21V5.5Z"
+        d="M9 20.5h6"
         stroke="currentColor"
         strokeWidth="1.8"
+        strokeLinecap="round"
       />
-      <path d="M5 5.5V21" stroke="currentColor" strokeWidth="1.8" />
     </svg>
   );
 }
 
 function DocumentIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <rect
-        x="5"
-        y="3"
-        width="14"
-        height="18"
-        rx="2"
-        stroke="currentColor"
-        strokeWidth="1.8"
-      />
-      <path
-        d="M9 8h6M9 12h6M9 16h4"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+      <rect x="5" y="3" width="14" height="18" rx="2.2" />
+      <rect x="8" y="8" width="8" height="1.6" rx="0.8" fill="var(--card)" />
+      <rect x="8" y="12" width="8" height="1.6" rx="0.8" fill="var(--card)" />
+      <rect x="8" y="16" width="5" height="1.6" rx="0.8" fill="var(--card)" />
     </svg>
   );
 }
 
 function ClipboardIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <rect
-        x="5"
-        y="5"
-        width="14"
-        height="16"
-        rx="2"
-        stroke="currentColor"
-        strokeWidth="1.8"
-      />
-      <path d="M9 5V3h6v2" stroke="currentColor" strokeWidth="1.8" />
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+      <rect x="5" y="4" width="14" height="17" rx="2.5" />
+      <rect x="9" y="2.2" width="6" height="4" rx="1.4" fill="var(--card)" />
     </svg>
   );
 }
 
 function ClockIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8" />
-      <path
-        d="M12 7v5l3 2"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 3a9 9 0 1 0 9 9h-9V3Z" />
+      <path d="M13.2 2.2V10.8h8.6A9 9 0 0 0 13.2 2.2Z" opacity="0.5" />
+    </svg>
+  );
+}
+
+/* Sidebar collapse toggle */
+
+function SidebarToggleIcon() {
+  return (
+    <svg
+      width="19"
+      height="19"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinejoin="round"
+    >
+      <rect x="3.5" y="4.5" width="17" height="15" rx="3" />
+      <line x1="9.7" y1="4.5" x2="9.7" y2="19.5" />
     </svg>
   );
 }
@@ -262,50 +290,168 @@ function SettingsIcon() {
   );
 }
 
+/* Small glyphs used inside the floating badges around the teacher illustration */
+
+function ClockGlyph() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="white"
+      strokeWidth="2.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l4 2" />
+    </svg>
+  );
+}
+
+function MessageGlyph() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="white">
+      <path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-5 4V6a1 1 0 0 1 1-1Z" />
+    </svg>
+  );
+}
+
+function CloudGlyph() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="white">
+      <path d="M7 18a5 5 0 0 1-.6-9.97A6 6 0 0 1 18 10a4.5 4.5 0 0 1-1 8H7Z" />
+    </svg>
+  );
+}
+
+function GearGlyph() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="white"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="12" cy="12" r="3" />
+      <path d="M19 13.5a7.8 7.8 0 0 0 0-3l2-1.5-2-3-2.3.9a8 8 0 0 0-2.5-1.5L14 3h-4l-.4 2.4a8 8 0 0 0-2.5 1.5L4.8 6 3 9l2 1.5a7.8 7.8 0 0 0 0 3L3 15l1.8 3 2.3-.9a8 8 0 0 0 2.5 1.5L10 21h4l.4-2.4a8 8 0 0 0 2.5-1.5l2.3.9 1.8-3-2-1.5Z" />
+    </svg>
+  );
+}
+
 function TeacherIllustration() {
   return (
     <div className="teacher-wrap">
-      <div className="teacher-ring teacher-ring-outer" />
-      <div className="teacher-ring teacher-ring-inner" />
+      <svg viewBox="0 0 220 220" className="teacher-svg" aria-hidden="true">
+        <circle cx="110" cy="110" r="104" fill="#FBD9CC" opacity="0.5" />
+        <circle cx="110" cy="110" r="78" fill="#FF8666" opacity="0.32" />
+        <circle cx="110" cy="110" r="62" fill="#ffffff" />
 
-      <div className="teacher-avatar">
-        <div className="teacher-hair" />
-        <div className="teacher-face">
-          <div className="glasses">
-            <span />
-            <span />
-          </div>
-          <div className="teacher-eyes">
-            <i />
-            <i />
-          </div>
-          <div className="teacher-smile" />
-        </div>
-        <div className="teacher-body">
-          <div className="teacher-shirt" />
-          <div className="teacher-book">
-            <span />
-            <span />
-          </div>
-        </div>
-      </div>
+        <clipPath id="teacherClip">
+          <circle cx="110" cy="110" r="62" />
+        </clipPath>
 
-      <span className="floating-icon floating-one">✦</span>
-      <span className="floating-icon floating-two">◌</span>
-      <span className="floating-icon floating-three">⌁</span>
-      <span className="floating-icon floating-four">✦</span>
+        <g clipPath="url(#teacherClip)">
+          {/* hair back */}
+          <path
+            d="M110 52c21 0 35 16 35 37c0 11-3 20-7 27l-9-4c3-8 5-15 5-22c0-17-11-30-24-30s-24 13-24 30c0 7 2 14 5 22l-9 4c-4-7-7-16-7-27c0-21 14-37 35-37Z"
+            fill="#2A211D"
+          />
+
+          {/* neck */}
+          <rect x="98" y="115" width="24" height="34" fill="#E8A47D" />
+
+          {/* face */}
+          <ellipse cx="110" cy="97" rx="24" ry="27" fill="#E8A47D" />
+
+          {/* hair fringe */}
+          <path
+            d="M86 84c1-13 11-24 24-24s23 11 24 24c-6-5-15-8-24-8s-18 3-24 8Z"
+            fill="#2A211D"
+          />
+
+          {/* glasses */}
+          <g stroke="#2A211D" strokeWidth="2.4" fill="none">
+            <rect x="88" y="90" width="18" height="13" rx="5.5" />
+            <rect x="114" y="90" width="18" height="13" rx="5.5" />
+            <line x1="106" y1="96" x2="114" y2="96" />
+          </g>
+
+          {/* eyes */}
+          <circle cx="97" cy="97" r="1.5" fill="#2A211D" />
+          <circle cx="123" cy="97" r="1.5" fill="#2A211D" />
+
+          {/* smile */}
+          <path
+            d="M101 111c4 3 14 3 18 0"
+            stroke="#7B3026"
+            strokeWidth="2"
+            strokeLinecap="round"
+            fill="none"
+          />
+
+          {/* blazer / shoulders */}
+          <path
+            d="M58 186c2-27 22-42 52-42s50 15 52 42v6H58v-6Z"
+            fill="#333333"
+          />
+          <path
+            d="M95 148l15 15 15-15 7 5-18 20h-8l-18-20 7-5Z"
+            fill="#f2f2f2"
+          />
+
+          {/* book, held in front */}
+          <path
+            d="M80 162c9-4 20-4 28 0v26c-8-4-19-4-28 0v-26Z"
+            fill="#ffffff"
+            stroke="#e3e3e3"
+            strokeWidth="1"
+          />
+          <path
+            d="M140 162c-9-4-20-4-28 0v26c8-4 19-4 28 0v-26Z"
+            fill="#f7f7f7"
+            stroke="#e3e3e3"
+            strokeWidth="1"
+          />
+          <line
+            x1="110"
+            y1="162"
+            x2="110"
+            y2="188"
+            stroke="#dcdcdc"
+            strokeWidth="1.4"
+          />
+        </g>
+      </svg>
+
+      <span className="floating-icon floating-one">
+        <ClockGlyph />
+      </span>
+      <span className="floating-icon floating-two">
+        <MessageGlyph />
+      </span>
+      <span className="floating-icon floating-three">
+        <CloudGlyph />
+      </span>
+      <span className="floating-icon floating-four">
+        <GearGlyph />
+      </span>
     </div>
   );
 }
 
 type UploadCardProps = {
   title: string;
-  type: "question" | "answer";
   file: File | null;
   onSelect: (file: File | null) => void;
 };
 
-function UploadCard({ title, type, file, onSelect }: UploadCardProps) {
+function UploadCard({ title, file, onSelect }: UploadCardProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleFile = (selectedFile?: File) => {
@@ -401,19 +547,20 @@ function UploadCard({ title, type, file, onSelect }: UploadCardProps) {
           <div className="upload-meta">Max 10MB</div>
         </>
       )}
-
-      <div className={`file-type ${type}`}>{file ? "✓" : ""}</div>
     </div>
   );
 }
 
 export default function Home() {
+  const [screen, setScreen] = useState<Screen>("upload");
   const [questionFile, setQuestionFile] = useState<File | null>(null);
   const [answerFile, setAnswerFile] = useState<File | null>(null);
-  const [screen, setScreen] = useState<"upload" | "extracting" | "results">(
-    "upload",
-  );
-  const [analysisResult, setAnalysisResult] = useState<any>(null);
+
+  const [activeNav, setActiveNav] = useState<
+    "help" | "notification" | "sparkle" | null
+  >(null);
+
+  const [profileOpen, setProfileOpen] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisError, setAnalysisError] = useState("");
   const [questions, setQuestions] = useState<ExtractedQuestion[]>([]);
@@ -481,12 +628,7 @@ export default function Home() {
                 ? question.text
                 : "Question text unavailable",
 
-            maxMarks,
-
             marks,
-
-            score,
-
             status,
 
             page: typeof question.page === "number" ? question.page : undefined,
@@ -520,10 +662,7 @@ export default function Home() {
       );
 
       setQuestions(normalizedQuestions);
-      console.log("Extracted questions:", normalizedQuestions);
 
-      console.log("ANALYSIS RESULT:", data);
-      setAnalysisResult(data);
       setScreen("results");
     } catch (error) {
       console.error(error);
@@ -564,7 +703,11 @@ export default function Home() {
 
         <section className="main-area">
           <header className="topbar">
-            <button className="back-button" aria-label="Go back">
+            <button
+              className="back-button"
+              aria-label="Go back"
+              onClick={() => window.history.back()}
+            >
               <BackIcon />
             </button>
 
@@ -574,24 +717,80 @@ export default function Home() {
             </div>
 
             <div className="topbar-right">
-              <button className="icon-button help">
+              <button
+                type="button"
+                aria-label="Help"
+                className={`icon-button help ${
+                  activeNav === "help" ? "active" : ""
+                }`}
+                onClick={() =>
+                  setActiveNav(activeNav === "help" ? null : "help")
+                }
+              >
                 <HelpIcon />
               </button>
 
-              <button className="icon-button notification">
+              <button
+                type="button"
+                aria-label="Notifications"
+                className={`icon-button notification ${
+                  activeNav === "notification" ? "active" : ""
+                }`}
+                onClick={() =>
+                  setActiveNav(
+                    activeNav === "notification" ? null : "notification",
+                  )
+                }
+              >
                 <BellIcon />
                 <span className="notification-dot" />
               </button>
 
-              <button className="sparkle-button">✦</button>
+              <button
+                type="button"
+                aria-label="AI Assistant"
+                className={`sparkle-button ${
+                  activeNav === "sparkle" ? "active" : ""
+                }`}
+                onClick={() =>
+                  setActiveNav(activeNav === "sparkle" ? null : "sparkle")
+                }
+              >
+                <SparkleIcon />
+              </button>
 
-              <div className="profile">
-                <div className="profile-avatar">🔥</div>
-                <strong>Madhur Rastogi</strong>
-                <span className="chevron">⌄</span>
+              <div className="profile-container">
+                <button
+                  type="button"
+                  className={`profile ${profileOpen ? "active" : ""}`}
+                  onClick={() => setProfileOpen(!profileOpen)}
+                  aria-expanded={profileOpen}
+                  aria-label="Open profile menu"
+                >
+                  <div className="profile-avatar">
+                    <ProfileIcon />
+                  </div>
+
+                  <strong>Madhur Rastogi</strong>
+
+                  <span className={`chevron ${profileOpen ? "open" : ""}`}>
+                    <ChevronDownIcon />
+                  </span>
+                </button>
+
+                {profileOpen && (
+                  <div className="profile-menu">
+                    <button type="button">Profile</button>
+                    <button type="button">Settings</button>
+                  </div>
+                )}
               </div>
 
-              <button className="mobile-menu">
+              <button
+                type="button"
+                className="mobile-menu"
+                aria-label="Open menu"
+              >
                 <MenuIcon />
               </button>
             </div>
@@ -633,12 +832,14 @@ export default function Home() {
           <div className="brand-name">VedaAI</div>
 
           <button className="collapse-button" aria-label="Collapse sidebar">
-            ◧
+            <SidebarToggleIcon />
           </button>
         </div>
 
         <div className="tool-pill">
-          <span>✦</span>
+          <span className="tool-pill-icon">
+            <SmallSparkleIcon />
+          </span>
           AI Teacher&apos;s Toolkit
         </div>
 
@@ -707,12 +908,18 @@ export default function Home() {
               <span className="notification-dot" />
             </button>
 
-            <button className="sparkle-button">✦</button>
+            <button className="sparkle-button">
+              <SparkleIcon />
+            </button>
 
             <div className="profile">
-              <div className="profile-avatar">🔥</div>
+              <div className="profile-avatar">
+                <ProfileIcon />
+              </div>
               <strong>Madhur Rastogi</strong>
-              <span className="chevron">⌄</span>
+              <span className="chevron">
+                <ChevronDownIcon />
+              </span>
             </div>
 
             <button className="mobile-menu">
@@ -735,14 +942,12 @@ export default function Home() {
           <div className="upload-container">
             <UploadCard
               title="Question Paper"
-              type="question"
               file={questionFile}
               onSelect={setQuestionFile}
             />
 
             <UploadCard
               title="Answer Sheet"
-              type="answer"
               file={answerFile}
               onSelect={setAnswerFile}
             />
@@ -781,7 +986,6 @@ export default function Home() {
   );
 }
 
-
 function ResultsScreen({
   answerFile,
   onBack,
@@ -791,7 +995,6 @@ function ResultsScreen({
   onBack: () => void;
   questions: ExtractedQuestion[];
 }) {
-  const extractedQuestions = questions;
   const [selectedQuestion, setSelectedQuestion] = useState(
     questions[0]?.id || "",
   );
@@ -802,7 +1005,7 @@ function ResultsScreen({
   const [zoom, setZoom] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const selected = extractedQuestions.find(
+  const selected = questions.find(
     (question) => question.id === selectedQuestion,
   );
 
@@ -864,9 +1067,19 @@ function ResultsScreen({
             <button className="sparkle-button">✦</button>
 
             <div className="profile">
-              <div className="profile-avatar">🔥</div>
-              <strong>Madhur Rastogi</strong>
-              <span className="chevron">⌄</span>
+              <div className="profile-avatar">
+                <ProfileIcon />
+              </div>
+
+              <strong className="profile-name">Madhur Rastogi</strong>
+
+              <button
+                type="button"
+                className="profile-chevron"
+                aria-label="Open profile menu"
+              >
+                <ChevronDownIcon />
+              </button>
             </div>
 
             <button className="mobile-menu">
@@ -906,7 +1119,7 @@ function ResultsScreen({
             </div>
 
             <div className="question-list">
-              {extractedQuestions.map((question) => {
+              {questions.map((question) => {
                 const isSelected = question.id === selectedQuestion;
 
                 return (

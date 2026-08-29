@@ -611,7 +611,7 @@ The teacher can upload the question paper and student answer sheet.
 
 The application provides a processing state while the documents are being analyzed.
 
-![Loading Files](images/loading%20files.png)
+![Loading Files](images/loading.png)
 
 ### Question Paper Sample
 
