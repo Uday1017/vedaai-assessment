@@ -599,7 +599,7 @@ The project contains a dedicated `images` folder with screenshots showing the ma
 
 The initial application interface where the teacher can begin the assessment analysis.
 
-![Homepage](images/Homepage.png)
+![Homepage](images/homepage.png)
 
 ### Upload Files
 
