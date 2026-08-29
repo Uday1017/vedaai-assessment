@@ -7,7 +7,7 @@ The workflow is simple. Upload the question paper and the student's answer sheet
 ## Screenshots
 
 ### Homepage
-![Homepage](images/homepage.png)
+![Homepage](images/Homepage.png)
 
 ### Upload Files
 ![Upload Files](images/uploadfiles.png)
